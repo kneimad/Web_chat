@@ -1,0 +1,11 @@
+.idea
+/.project
+/.classpath
+/.settings
+/bin/
+/target/
+*.ipr
+*.iws
+*.iml
+*.bat
+*.cmd
