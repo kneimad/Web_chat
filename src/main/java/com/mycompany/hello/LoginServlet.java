@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
         userManager = new UserManager();
         
     }
-    
+    //
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and
