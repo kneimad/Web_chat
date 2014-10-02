@@ -32,12 +32,17 @@ public class LogoutServlet extends HttpServlet {
             throws ServletException, IOException {
 
         response.setContentType("text/html;charset=UTF-8");
-
+        PrintWriter out = response.getWriter();
+        try {
             String userName = request.getParameter("login");
             User user = new User(userName);
             userManager.removeUser(user);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-            dispatcher.forward(request, response);
+            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+            out.println("<font color=red>You have been deleted from Chat.</font>");
+            dispatcher.include(request, response);
+        }finally {
+            out.close();
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
