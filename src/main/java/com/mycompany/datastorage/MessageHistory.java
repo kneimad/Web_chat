@@ -1,4 +1,7 @@
-package com.mycompany.hello;
+package com.mycompany.datastorage;
+
+import com.mycompany.beans.User;
+import com.mycompany.beans.UserMessage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

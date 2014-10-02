@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.mycompany.hello;
+package com.mycompany.beans;
 
-import java.awt.Color;
 import java.util.Date;
 
 /**
@@ -45,6 +44,11 @@ public class User {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public String toString(){
+        return "name: "+name;
     }
 
     public Date getLoginTime() {

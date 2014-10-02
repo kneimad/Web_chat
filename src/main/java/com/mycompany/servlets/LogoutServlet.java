@@ -1,4 +1,7 @@
-package com.mycompany.hello;
+package com.mycompany.servlets;
+
+import com.mycompany.beans.User;
+import com.mycompany.businesslogic.UserManager;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -6,14 +9,14 @@ import javax.servlet.ServletException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.*;
 
-public class LoginServlet extends HttpServlet {
+public class LogoutServlet extends HttpServlet {
     private UserManager userManager;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        userManager = new UserManager();
-        
+        userManager = UserManager.getInstance();
+
     }
     /**
      * Processes requests for both HTTP
@@ -27,36 +30,14 @@ public class LoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        PrintWriter out = response.getWriter();
-        try {
-        //get request parameters for userID and password
-         String userName = request.getParameter("login");
-         User user = new User(userName);
 
-        //logging example
-        //log("User="+user+"::password="+pwd);
-         
-        if(userManager.isUserNameUsed(user)){
-            RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
-            out.println("<font color=red>Current user name is already used.</font>");
-            dispatcher.include(request, response);            
-        }
-        else{
-            //--------- session 
-            /*HttpSession session = request.getSession();
-            session.setAttribute("login", user);
-            response.sendRedirect("name.jsp");      */
-            
-            //--------- request
-            request.setAttribute("login", user.getName());
-            userManager.addUser(user);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp");
+        response.setContentType("text/html;charset=UTF-8");
+
+            String userName = request.getParameter("login");
+            User user = new User(userName);
+            userManager.removeUser(user);
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
             dispatcher.forward(request, response);
-        }
-        } finally {            
-            out.close();
-        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -97,6 +78,6 @@ public class LoginServlet extends HttpServlet {
      */
     @Override
     public String getServletInfo() {
-        return "Short description";
+        return "Servlet for users logout";
     }// </editor-fold>
 }

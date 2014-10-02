@@ -34,7 +34,7 @@
         Ваш логін:<%= login %><br/>
         Ваша IP адреса: <%= ipAddress %>
         
-        <form name="hello" action="ChatServlet" method="post">   
+        <form name="hello" action="LogoutServlet" method="post">
             <table border="0">
                  <tbody>
                     <tr>
