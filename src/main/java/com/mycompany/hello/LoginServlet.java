@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.hello;
 
 import java.io.IOException;
@@ -10,10 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.*;
 
-/**
- *
- * @author Damien
- */
 public class LoginServlet extends HttpServlet {
     private UserManager userManager;
 
@@ -23,7 +15,6 @@ public class LoginServlet extends HttpServlet {
         userManager = new UserManager();
         
     }
-    //
     /**
      * Processes requests for both HTTP
      * <code>GET</code> and

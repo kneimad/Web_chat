@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.hello;
 
 import java.text.DateFormat;
@@ -10,10 +6,6 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 
-/**
- *
- * @author Damien
- */
 public class MessageHistory {
     private static final int MAX_HISTORY_SIZE = 100;
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
