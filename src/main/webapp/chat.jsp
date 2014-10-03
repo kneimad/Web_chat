@@ -4,6 +4,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link href="style.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="chatScript.js"></script>
         <title>JSP Page</title>
     </head>
     <body>
@@ -19,7 +20,6 @@
                     <span>petro</span>
                 </div>
             </div>
-            <!--<textarea class="text_field" name="content" placeholder="Введіть повідомлення"></textarea>-->
             <input type="text" class="text_field" placeholder="Введіть повідомлення"/>
             <button class="but">
                 <span>Відправити</span>
@@ -27,8 +27,8 @@
         </div>
         <br/>
         <h3>Ви зареєстровані як користувач:</h3>
-        <% String login=(String)request.getAttribute("login"); 
-           //String login=session.getAttribute("login").toString();
+        <% //String login=(String)request.getAttribute("login");
+           String login=session.getAttribute("login").toString();
            String ipAddress=request.getRemoteAddr();
         %>
         Ваш логін:<%= login %><br/>
@@ -43,5 +43,23 @@
                 </tbody>
             </table>
         </form>
+
+            <table border="0">
+                 <tbody>
+                    <tr>
+                          </br>
+                          <strong> Users List </strong>
+                          </br>
+                    </tr>
+                    <tr>
+                          <td> <textarea id="users" class="text_field" name="users" placeholder="Тут будуть юзери"></textarea> </td>
+                    </tr>
+                    <tr>
+                          </br>
+                          <td> <button onclick="getUsers()">REFRESH</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
     </body>
 </html>

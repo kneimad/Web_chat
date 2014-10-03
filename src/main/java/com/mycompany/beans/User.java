@@ -47,8 +47,10 @@ public class User {
     }
 
     @Override
-    public String toString(){
-        return "name: "+name;
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                '}';
     }
 
     public Date getLoginTime() {

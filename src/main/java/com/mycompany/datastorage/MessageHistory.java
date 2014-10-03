@@ -5,6 +5,7 @@ import com.mycompany.beans.UserMessage;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -12,9 +13,15 @@ import java.util.LinkedList;
 public class MessageHistory {
     private static final int MAX_HISTORY_SIZE = 100;
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static MessageHistory instance = new MessageHistory();
     private LinkedList<UserMessage> history;
 
-    public MessageHistory() {
+    public static MessageHistory getInstance()
+    {
+        return instance;
+    }
+
+    private MessageHistory() {
         history = new LinkedList<UserMessage>();
     }
 
@@ -33,23 +40,22 @@ public class MessageHistory {
     
     public String extractUserHistory(User user)
     {
-        Iterator<UserMessage> iterator = history.iterator();
+        Iterator<UserMessage> iterator = new ArrayList<UserMessage>(history).iterator();
         StringBuffer stringBuffer = new StringBuffer();
         Date loginTime = user.getLoginTime();
-        UserMessage userMessage = null;
+        UserMessage userMessage;
         while (iterator.hasNext())
         {
             userMessage = iterator.next();
             if(loginTime.before(userMessage.getTime()))
             {
+                appendMessage(userMessage, stringBuffer);
                 break;
             }
         }
-        appendMessage(userMessage, stringBuffer);
         while (iterator.hasNext())
         {
-            userMessage = iterator.next();
-            appendMessage(userMessage, stringBuffer);
+            appendMessage(iterator.next(), stringBuffer);
         }        
         return ("<userMessages>" + stringBuffer.toString() + "</userMessages>");
     }

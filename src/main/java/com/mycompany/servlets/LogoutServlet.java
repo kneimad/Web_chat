@@ -2,6 +2,7 @@ package com.mycompany.servlets;
 
 import com.mycompany.beans.User;
 import com.mycompany.businesslogic.UserManager;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -11,6 +12,7 @@ import javax.servlet.http.*;
 
 public class LogoutServlet extends HttpServlet {
     private UserManager userManager;
+    private static final Logger log = Logger.getLogger(LogoutServlet.class);
 
     @Override
     public void init() throws ServletException {
@@ -34,7 +36,7 @@ public class LogoutServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            String userName = request.getParameter("login");
+            String userName = request.getSession().getAttribute("login").toString();
             User user = new User(userName);
             userManager.removeUser(user);
             RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");

@@ -16,6 +16,14 @@
         <servlet-name>LogoutServlet</servlet-name>
         <url-pattern>/LogoutServlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>ChatServlet</servlet-name>
+        <servlet-class>com.mycompany.servlets.ChatServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ChatServlet</servlet-name>
+        <url-pattern>/ChatServlet</url-pattern>
+    </servlet-mapping>
     <session-config>
         <session-timeout>
             30

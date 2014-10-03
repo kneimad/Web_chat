@@ -47,12 +47,11 @@ public class LoginServlet extends HttpServlet {
         }
         else{
             //--------- session 
-            /*HttpSession session = request.getSession();
-            session.setAttribute("login", user);
-            response.sendRedirect("name.jsp");      */
-            
+            HttpSession session = request.getSession();
+            session.setAttribute("login", userName);
+
             //--------- request
-            request.setAttribute("login", user.getName());
+            //request.setAttribute("login", user.getName());
             userManager.addUser(user);
             RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp");
             dispatcher.forward(request, response);
