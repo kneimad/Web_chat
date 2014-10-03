@@ -1,49 +1,78 @@
-var req;
-var isIE;
+//jQuery - AJAX
 
-function getUsers() {
-        var url = "ChatServlet?action=getUsers";
-        req = initRequest();
-        req.open("GET", url, true);
-        req.onreadystatechange = callback;
-        req.send(null);
+$(document).ready(function() {
+    // Update interval for the users list - 3 seconds
+    setInterval(getUsers,8000);
+    // Update interval for the message history - 1 seconds
+    setInterval(getHistory,5000);
+    // If the user is closing the tab
+    $(window).on("onbeforeunload", onclose);
+    // Send message button click
+    $('#sendmsg').click(sendClick);
+});
+
+function onclose() {
+    alert( "-------- You are leaving the chat -----------" );
+    $('#exit').click();
 }
 
-function initRequest() {
-    if (window.XMLHttpRequest) {
-        if (navigator.userAgent.indexOf('MSIE') != -1) {
-            isIE = true;
-        }
-        return new XMLHttpRequest();
-    } else if (window.ActiveXObject) {
-        isIE = true;
-        return new ActiveXObject("Microsoft.XMLHTTP");
-    }
+function sendClick(){
+$.ajax({
+ 	    url: "ChatServlet?action=sendMessage",
+ 	    method: 'GET',
+ 	    data: {message: $('#chattext').val()},
+ 	    dataType: 'text/html'
+	});
+	//$('.text_field').text(""); //?????????????????????????????????$
+	$('#chattext').text("");
 }
 
-function callback() {
-    if (req.readyState == 4) {
-        if (req.status == 200) {
-            parseMessages(req.responseXML);
-        }
-    }
+function getUsers(){
+	$.ajax({
+ 	    url: "ChatServlet?action=getUsers",
+ 	    method: 'GET',
+ 	    data: {},
+ 	    dataType: 'xml',
+ 	    success: function(responseXML) {
+ 		if (!responseXML) {
+  			return false;
+ 		}
+        //console.log($(responseXML).find('users'));
+        //console.log($(responseXML).find('user'));
+        //console.log($(responseXML).find('user').text());
+        //console.log(responseXML);
+        //console.log($.parseXML(responseXML));
+
+		var users = $(responseXML).find('user');
+		$('.users').text("");
+        users.each(function() {
+            $('.users').append("<span>"+ $(this).text() + "</br></span>");
+        });
+	}
+	});
 }
 
-function parseMessages(responseXML) {
+function getHistory(){
+	$.ajax({
+ 	    url: "ChatServlet?action=getHistory",
+ 	    method: 'GET',
+ 	    data: {},
+ 	    dataType: 'xml',
+ 	    success: function(responseXML) {
+ 		if (!responseXML) {
+  			return false;
+ 		}
+        //console.log($(responseXML).find('users'));
+        //console.log($(responseXML).find('user'));
+        //console.log($(responseXML).find('user').text());
+        //console.log(responseXML);
+        //console.log($.parseXML(responseXML));
 
-    if (responseXML == null) {
-        return false;
-    } else {
-
-        var users = responseXML.getElementsByTagName("users")[0];
-        document.getElementById("users").value = users;
-
-//        if (users.childNodes.length > 0) {
-//            for (loop = 0; loop < users.childNodes.length; loop++) {
-//                var user = users.childNodes[loop];
-//                var name = user.getElementsByTagName("user")[0];
-//                appendComposer(name.childNodes[0].nodeValue);
-//            }
-//        }
-    }
+		var userMessage = $(responseXML).find('userMessage');
+		$('.history').text("");
+        users.each(function() {
+            $('.history').append("<span>"+ $(this).text() + "</br></span>");
+        });
+	}
+	});
 }
