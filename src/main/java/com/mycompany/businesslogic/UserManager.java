@@ -1,51 +1,90 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.businesslogic;
 
 import com.mycompany.beans.User;
 import org.apache.log4j.Logger;
 
-import java.util.*;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
+/**
+ * Manages users of the chat.
+ * <p/>
+ * Lets to add and remove user, gets all added users, gets user's login time
+ * and checks is user logged in.
+ *
+ * @author Damien
+ */
 public class UserManager {
-    private Map<User,Date> users;
-    private static UserManager instance = new UserManager();
-
+    /**
+     * Logger for current class by log4j.
+     */
     private static final Logger log = Logger.getLogger(UserManager.class);
+    /**
+     * Solo instance of {@code UserManager} class.
+     */
+    private static UserManager instance = new UserManager();
+    /**
+     * Set of entries user and its login time.
+     */
+    private Map<User, Date> users;
 
+    /**
+     * Solo constructor.
+     */
     private UserManager() {
         users = new HashMap<User, Date>();
     }
 
+    /**
+     * Provides the only instance of {@code UserManager} class.
+     * @return instance of {@code UserManager} class.
+     */
     public static UserManager getInstance() {
         return instance;
     }
 
-    public Date getLoginTime(User user)
-    {
+    /**
+     * Gets login time of given user.
+     * @param user is a user of a chat.
+     * @return login time of given user.
+     */
+    public Date getLoginTime(User user) {
         return users.get(user);
     }
 
-    public void addUser(User user)
-    {
+    /**
+     * Adds given user to set of logged users.
+     * @param user is a user of a chat.
+     */
+    public void addUser(User user) {
         users.put(user, new Date());
 
         log.info("The new user was added: " + user.toString());
     }
 
-    public boolean isUserNameUsed(User user)
-    {
+    /**
+     * Checks is user logged in.
+     * @param user is a user of a chat.
+     * @return {@code true}, if the user is logged in, otherwise {@code false}
+     */
+    public boolean isUserNameUsed(User user) {
         return users.containsKey(user);
     }
 
+    /**
+     * Gets all logged users.
+     * @return set of users and their login time.
+     */
     public Map<User, Date> getUsers() {
         return users;
     }
 
-    public void removeUser(User user)
-    {
+    /**
+     * Removes a user from the set of logged users.
+     * @param user is a user of a chat.
+     */
+    public void removeUser(User user) {
         users.remove(user);
         log.info("The user was removed: " + user.toString());
     }

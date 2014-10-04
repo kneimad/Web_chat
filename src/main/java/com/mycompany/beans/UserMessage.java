@@ -7,13 +7,12 @@ package com.mycompany.beans;
 import java.util.Date;
 
 /**
- *
  * @author Damien
  */
 public class UserMessage {
-    private  Date time;
     private final User user;
     private final String message;
+    private Date time;
 
     public UserMessage(User user, String message) {
         this.user = user;
@@ -24,16 +23,16 @@ public class UserMessage {
         return time;
     }
 
+    public void setTime(Date time) {
+        this.time = time;
+    }
+
     public User getUser() {
         return user;
     }
 
     public String getMessage() {
         return message;
-    }
-
-    public void setTime(Date time) {
-        this.time = time;
     }
 
     @Override

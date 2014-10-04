@@ -1,23 +1,30 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.mycompany.beans;
 
-import java.util.Date;
-
 /**
+ * Represents a user of the chat.
  *
  * @author Damien
  */
 public class User {
+    /**
+     * Name of a user.
+     */
     private final String name;
+    /** Color of user's name and messages. */
     //private Color color;
 
+    /**
+     * Solo constructor of user.
+     */
     public User(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets user's name.
+     *
+     * @return name of a user.
+     */
     public String getName() {
         return name;
     }

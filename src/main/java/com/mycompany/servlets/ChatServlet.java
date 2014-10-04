@@ -13,9 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -23,12 +21,11 @@ import java.util.Set;
  */
 public class ChatServlet extends HttpServlet {
 
+    private static final Logger log = Logger.getLogger(ChatServlet.class);
+    private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
     private UserManager userManager = UserManager.getInstance();
     private MessageHistory messageHistory = MessageHistory.getInstance();
-    private static final Logger log = Logger.getLogger(ChatServlet.class);
     private User user;
-
-    private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
