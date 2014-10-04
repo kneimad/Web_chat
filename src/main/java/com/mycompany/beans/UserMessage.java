@@ -35,5 +35,13 @@ public class UserMessage {
     public void setTime(Date time) {
         this.time = time;
     }
-    
+
+    @Override
+    public String toString() {
+        return "UserMessage{" +
+                "time=" + time +
+                ", user=" + user +
+                ", message='" + message + '\'' +
+                '}';
+    }
 }

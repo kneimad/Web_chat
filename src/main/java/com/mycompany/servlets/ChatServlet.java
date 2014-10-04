@@ -4,6 +4,7 @@ import com.mycompany.beans.User;
 import com.mycompany.beans.UserMessage;
 import com.mycompany.businesslogic.UserManager;
 import com.mycompany.datastorage.MessageHistory;
+import org.apache.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,6 +25,7 @@ public class ChatServlet extends HttpServlet {
 
     private UserManager userManager = UserManager.getInstance();
     private MessageHistory messageHistory = MessageHistory.getInstance();
+    private static final Logger log = Logger.getLogger(ChatServlet.class);
     private User user;
 
     private static final DateFormat dateFormat = new SimpleDateFormat("HH:mm");
@@ -33,11 +35,11 @@ public class ChatServlet extends HttpServlet {
         String action = request.getParameter("action");
         String userName = request.getSession().getAttribute("login").toString();
         user = new User(userName);
-        System.out.print("\nAction: " + action);
-        //System.out.println("User: " + userName);
+        log.info("\nAction: " + action);
+//        System.out.print("\nUser: " + userName);
 
         if (action.equals("getUsers")) {
-            HashSet<User> users = new HashSet<User>(userManager.getUsers());
+            Set<User> users = new HashSet<User>(userManager.getUsers().keySet());
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             stringBuffer.append("<users>");
@@ -53,25 +55,25 @@ public class ChatServlet extends HttpServlet {
         }
 
         if (action.equals("sendMessage")) {
-            System.out.print("\nFrom Server --> the message was sent: ");
+            log.info("\nFrom Server --> the message was sent: ");
             String message = request.getParameter("message");
-            System.out.print(message);
+            log.info(message);
             UserMessage userMessage = new UserMessage(user, message);
             messageHistory.addMessage(userMessage);
             //userMessage.setTime(new Date());
-            System.out.print("\n[" + dateFormat.format(userMessage.getTime()) + "] " + userMessage.getUser().getName() + " : " + userMessage.getMessage());
+            log.info("\n[" + dateFormat.format(userMessage.getTime()) + "] " + userMessage.getUser().getName() + " : " + userMessage.getMessage());
         }
 
         if (action.equals("getHistory")) {
             String message = messageHistory.extractUserHistory(user);
-            System.out.print("\nMessage: " + message + " From user: " + user.getName());
+            log.info("\nMessage: " + message + " From user: " + user.getName());
             StringBuffer stringBuffer = new StringBuffer();
 
             response.setContentType("text/xml");
             response.setHeader("Cache-Control", "no-cache");
             stringBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             stringBuffer.append(message);
-            System.out.print("\n" + stringBuffer.toString());
+            log.info("\n" + stringBuffer.toString());
             response.getWriter().write(stringBuffer.toString());
         }
     }

@@ -35,7 +35,7 @@ function getUsers(){
  	    dataType: 'xml',
  	    success: function(responseXML) {
  		if (!responseXML) {
-  			return false;
+  			return;
  		}
         //console.log($(responseXML).find('users'));
         //console.log($(responseXML).find('user'));
@@ -62,15 +62,16 @@ function getHistory(){
  		if (!responseXML) {
   			return false;
  		}
-        console.log($(responseXML).find('userMessages'));
-        console.log($(responseXML).find('userMessage'));
+        //console.log($(responseXML).find('userMessages'));
+        //console.log($(responseXML).find('userMessage'));
         console.log($(responseXML).find('userMessage').text());
         //console.log(responseXML);
         //console.log($.parseXML(responseXML));
 
 		var userMessage = $(responseXML).find('userMessage');
 		$('.history').text("");
-        users.each(function() {
+        userMessage.each(function() {
+            //console.log($(this).text());
             $('.history').append("<span>"+ $(this).text() + "</br></span>");
         });
 	}

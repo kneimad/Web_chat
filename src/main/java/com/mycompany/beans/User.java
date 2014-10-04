@@ -12,12 +12,10 @@ import java.util.Date;
  */
 public class User {
     private final String name;
-    private final Date loginTime;
     //private Color color;
 
     public User(String name) {
         this.name = name;
-        this.loginTime = new Date();
     }
 
     public String getName() {
@@ -53,8 +51,4 @@ public class User {
                 '}';
     }
 
-    public Date getLoginTime() {
-        return loginTime;
-    }
-    
 }

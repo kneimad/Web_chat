@@ -2,6 +2,8 @@ package com.mycompany.datastorage;
 
 import com.mycompany.beans.User;
 import com.mycompany.beans.UserMessage;
+import com.mycompany.businesslogic.UserManager;
+import org.apache.log4j.Logger;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -12,9 +14,11 @@ import java.util.LinkedList;
 
 public class MessageHistory {
     private static final int MAX_HISTORY_SIZE = 100;
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private static final DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss] ");
     private static MessageHistory instance = new MessageHistory();
+    private UserManager userManager = UserManager.getInstance();
     private LinkedList<UserMessage> history;
+    private static final Logger log = Logger.getLogger(MessageHistory.class);
 
     public static MessageHistory getInstance()
     {
@@ -42,11 +46,13 @@ public class MessageHistory {
     {
         Iterator<UserMessage> iterator = new ArrayList<UserMessage>(history).iterator();
         StringBuffer stringBuffer = new StringBuffer();
-        Date loginTime = user.getLoginTime();
+        Date loginTime = userManager.getLoginTime(user);
         UserMessage userMessage;
+        log.info("\nLogin time:" + loginTime);
         while (iterator.hasNext())
         {
             userMessage = iterator.next();
+            log.info("\nMsg time: " + userMessage.getTime() + "  need to be shown:  " + (loginTime.before(userMessage.getTime())));
             if(loginTime.before(userMessage.getTime()))
             {
                 appendMessage(userMessage, stringBuffer);
@@ -65,7 +71,7 @@ public class MessageHistory {
         stringBuffer.append("<userMessage>");
         stringBuffer.append("<time>" + dateFormat.format(userMessage.getTime()) + "</time>");
         stringBuffer.append("<name>" + userMessage.getUser().getName() + "</name>");
-        stringBuffer.append("<message>" + userMessage.getMessage()+ "</message>");
+        stringBuffer.append("<message>: " + userMessage.getMessage()+ "</message>");
         stringBuffer.append("</userMessage>");    
     }
 }

@@ -10,31 +10,37 @@ import org.apache.log4j.Logger;
 import java.util.*;
 
 public class UserManager {
-    private Set<User> users;
+    private Map<User,Date> users;
     private static UserManager instance = new UserManager();
 
     private static final Logger log = Logger.getLogger(UserManager.class);
 
     private UserManager() {
-        users = new HashSet<User>();
+        users = new HashMap<User, Date>();
     }
 
     public static UserManager getInstance() {
         return instance;
     }
 
+    public Date getLoginTime(User user)
+    {
+        return users.get(user);
+    }
+
     public void addUser(User user)
     {
-        users.add(user);
+        users.put(user, new Date());
+
         log.info("The new user was added: " + user.toString());
     }
 
     public boolean isUserNameUsed(User user)
     {
-        return users.contains(user);
+        return users.containsKey(user);
     }
 
-    public Set<User> getUsers() {
+    public Map<User, Date> getUsers() {
         return users;
     }
 
