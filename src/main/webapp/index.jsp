@@ -5,8 +5,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body>
-        <h1>Оберіть логін для чату:</h1>    
+    <body style="font-family: arial;">
+        <h1 style="font-size: 20px; font-weight: bold;">Оберіть логін для чату:</h1>
         <form name="hello" action="LoginServlet" method="post">   
             <table border="0">
  
@@ -17,7 +17,7 @@
                     </tr>
                     <tr>
                         <td></td>
-                        <td> <input type="submit" value="Підтвердити" name="submit" /><br/></td>
+                        <td> <input type="submit" value="Підтвердити" name="submit"  style="font-weight: bold; color:#ffffff; background-color:#18e351"/><br/></td>
                     </tr>
                 </tbody>
             </table>

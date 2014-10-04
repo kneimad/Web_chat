@@ -62,9 +62,9 @@ function getHistory(){
  		if (!responseXML) {
   			return false;
  		}
-        //console.log($(responseXML).find('users'));
-        //console.log($(responseXML).find('user'));
-        //console.log($(responseXML).find('user').text());
+        console.log($(responseXML).find('userMessages'));
+        console.log($(responseXML).find('userMessage'));
+        console.log($(responseXML).find('userMessage').text());
         //console.log(responseXML);
         //console.log($.parseXML(responseXML));
 

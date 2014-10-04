@@ -23,24 +23,24 @@
             <button id="sendmsg" class="but">
                 <span>Відправити</span>
             </button>
-        </div>
         <br/>
-        <h3>Ви зареєстровані як користувач:</h3>
+        <h3 class="banner">Ви зареєстровані як користувач:</h3>
         <% //String login=(String)request.getAttribute("login");
            String login=session.getAttribute("login").toString();
            String ipAddress=request.getRemoteAddr();
         %>
         Ваш логін:<%= login %><br/>
         Ваша IP адреса: <%= ipAddress %>
-        
+
         <form name="hello" action="LogoutServlet" method="post">
             <table border="0">
-                 <tbody>
+                <tbody>
                     <tr>
-                          <td> <input id="exit" type="submit" value="Вийти" name="submit" /><br/></td>
+                        <td> <input id="exit" type="submit" value="Вийти" name="submit" /><br/></td>
                     </tr>
                 </tbody>
             </table>
         </form>
+        </div>
     </body>
 </html>
