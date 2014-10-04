@@ -2,21 +2,25 @@ html{
     background: #999;
     font-family: arial;
 }
+
 .content{
     width:1200px;
     margin: 0px auto;
     padding: 0px;
 }
+
 .banner{
     color: #ffffff;
     font-size: 20px;
     font-weight: bold;
 }
+
 .text{
     width: 1200px;
     height: 400px;
     background: #ffffff;
 }
+
 .history{
     display: inline-block;
     width: 994px;
@@ -25,6 +29,7 @@ html{
     margin: 0px;
     padding: 5px 0px 0px 5px;
 }
+
 .users{
     display: inline-block;
     float: right;
@@ -32,8 +37,8 @@ html{
     height: 395px;
     margin: 0px;
     padding: 5px 0px 0px 5px;
-
 }
+
 .text_field{
     width: 988px;
     height: 50px;
@@ -42,6 +47,7 @@ html{
     border: none;
     font-size: 20px;
 }
+
 .but{
     background: #18e351;
     border: none;
@@ -52,6 +58,7 @@ html{
     padding: 0px 0px 0px 0px;
     cursor: pointer;
 }
+
 .but span{
     color: #ffffff;
     font-weight: bold;

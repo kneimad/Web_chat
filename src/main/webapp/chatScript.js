@@ -21,10 +21,9 @@ $.ajax({
  	    url: "ChatServlet?action=sendMessage",
  	    method: 'GET',
  	    data: {message: $('#chattext').val()},
- 	    dataType: 'text/html'
+ 	    dataType: 'text/html',
 	});
-	//$('.text_field').text(""); //?????????????????????????????????$
-	$('#chattext').text("");
+	$('#chattext').val("");
 }
 
 function getUsers(){
@@ -45,8 +44,14 @@ function getUsers(){
 
 		var users = $(responseXML).find('user');
 		$('.users').text("");
+		var login = $('#login').val();
+		//console.log(login);
         users.each(function() {
-            $('.users').append("<span>"+ $(this).text() + "</br></span>");
+            if ($(this).text() == login )
+            {
+                $('.users').append("<span style='color:red;'>"+ $(this).text() + "</br></span>");
+            }
+            else $('.users').append("<span>"+ $(this).text() + "</br></span>");
         });
 	}
 	});
@@ -64,15 +69,20 @@ function getHistory(){
  		}
         //console.log($(responseXML).find('userMessages'));
         //console.log($(responseXML).find('userMessage'));
-        console.log($(responseXML).find('userMessage').text());
+        //console.log($(responseXML).find('userMessage').text());
         //console.log(responseXML);
         //console.log($.parseXML(responseXML));
 
 		var userMessage = $(responseXML).find('userMessage');
 		$('.history').text("");
+		var login = $('#login').val();
         userMessage.each(function() {
-            //console.log($(this).text());
-            $('.history').append("<span>"+ $(this).text() + "</br></span>");
+            //console.log( $(this).find('name').text() );
+            if ( ($(this).find('name')).text() == login )
+            {
+            $('.history').append("<span style='color:red;'>"+ $(this).text() + "</br></span>");
+            }
+            else $('.history').append("<span >"+ $(this).text() + "</br></span>");
         });
 	}
 	});

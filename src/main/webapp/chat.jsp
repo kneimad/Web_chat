@@ -10,6 +10,7 @@
     </head>
     <body>
         <div class="content">
+            <span></br></span>
             <span class="banner">CHAT</span>
             <div class="text">
                 <div class="history">
@@ -25,12 +26,12 @@
             </button>
         <br/>
         <h3 class="banner">Ви зареєстровані як користувач:</h3>
-        <% //String login=(String)request.getAttribute("login");
+        <%
            String login=session.getAttribute("login").toString();
            String ipAddress=request.getRemoteAddr();
         %>
-        Ваш логін:<%= login %><br/>
-        Ваша IP адреса: <%= ipAddress %>
+        Ваш логін: <input id="login" type="text" value="<%= login %>" readonly/><br/><br/>
+        Ваша IP адреса: <input id="ipAddr" type="text" value="<%= ipAddress %>" readonly/><br/><br/>
 
         <form name="hello" action="LogoutServlet" method="post">
             <table border="0">
