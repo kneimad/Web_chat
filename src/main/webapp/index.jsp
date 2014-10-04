@@ -13,7 +13,7 @@
                 <tbody>
                     <tr>
                         <td>Логін: </td>
-                        <td><input type="text" name="login" value="" size="15" /></td>
+                        <td><input type="text" name="login" value="" size="15" required /></td>
                     </tr>
                     <tr>
                         <td></td>

@@ -27,7 +27,7 @@ public class UserManager {
     /**
      * Set of entries user and its login time.
      */
-    private Map<User, Date> users;
+    private final Map<User, Date> users;
 
     /**
      * Solo constructor.
@@ -54,13 +54,17 @@ public class UserManager {
     }
 
     /**
-     * Adds given user to set of logged users.
+     * Adds given user to the set of logged users, if this user not in the set.
      * @param user is a user of a chat.
      */
-    public void addUser(User user) {
-        users.put(user, new Date());
-
-        log.info("The new user was added: " + user.toString());
+    public boolean addUser(User user) {
+        synchronized (users) {
+            if (!users.containsKey(user)) {
+                users.put(user, new Date());
+                return true;
+            }
+            return false;
+        }
     }
 
     /**

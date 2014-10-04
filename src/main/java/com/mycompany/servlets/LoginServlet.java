@@ -2,6 +2,7 @@ package com.mycompany.servlets;
 
 import com.mycompany.beans.User;
 import com.mycompany.businesslogic.UserManager;
+import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import java.io.PrintWriter;
 
 public class LoginServlet extends HttpServlet {
     private UserManager userManager;
+    private static final Logger log = Logger.getLogger(LoginServlet.class);
 
     @Override
     public void init() throws ServletException {
@@ -37,27 +39,26 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
-            //get request parameters for userID and password
+            //get request parameters for user
             String userName = request.getParameter("login");
+
+            if (userName.isEmpty()) {
+                RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
+                out.println("<font color=red>User's name not specified.</font>");
+                dispatcher.include(request, response);
+            }
             User user = new User(userName);
 
-            //logging example
-            //log("User="+user+"::password="+pwd);
-
-            if (userManager.isUserNameUsed(user)) {
+            if (userManager.addUser(user)) {
+                log.info("The new user was added: " + userName);
+                HttpSession session = request.getSession();
+                session.setAttribute("login", userName);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp");
+                dispatcher.forward(request, response);
+            } else {
                 RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/index.jsp");
                 out.println("<font color=red>Current user name is already used.</font>");
                 dispatcher.include(request, response);
-            } else {
-                //--------- session
-                HttpSession session = request.getSession();
-                session.setAttribute("login", userName);
-
-                //--------- request
-                //request.setAttribute("login", user.getName());
-                userManager.addUser(user);
-                RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp");
-                dispatcher.forward(request, response);
             }
         } finally {
             out.close();
