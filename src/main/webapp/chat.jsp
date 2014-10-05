@@ -8,18 +8,14 @@
         <script type="text/javascript" src="chatScript.js"></script>
         <title>JSP Page</title>
     </head>
-    <body>
+    <body onload = "getUsers();">
         <div class="content">
             <span></br></span>
-            <span class="banner">CHAT</span>
-            <div class="text">
-                <div class="history">
-                    <span>no messages yet<br /></span>
-                </div>
-                <div class="users">
-                    <span>no users yet<br/></span>
-                </div>
-            </div>
+            <span class="banner">CHAT</span></br>
+            <form name="chat" action="ChatServlet" method="post">
+                <textarea id="msgList" class="history" placeholder="Message History" readonly></textarea>
+                <textarea id="userList" class="users" placeholder="Users List" readonly></textarea>
+            </form>
             <input id="chattext" type="text" class="text_field" placeholder="Введіть повідомлення"/>
             <button id="sendmsg" class="but">
                 <span>Відправити</span>
