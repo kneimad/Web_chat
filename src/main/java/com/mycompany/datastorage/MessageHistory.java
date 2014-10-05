@@ -14,8 +14,8 @@ public class MessageHistory {
     private static final DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss] ");
     private static final Logger log = Logger.getLogger(MessageHistory.class);
     private static MessageHistory instance = new MessageHistory();
-    private UserManager userManager = UserManager.getInstance();
     private final LinkedList<UserMessage> history;
+    private UserManager userManager = UserManager.getInstance();
 
     private MessageHistory() {
         history = new LinkedList<UserMessage>();

@@ -36,6 +36,7 @@ public class UserManager {
 
     /**
      * Provides the only instance of {@code UserManager} class.
+     *
      * @return instance of {@code UserManager} class.
      */
     public static UserManager getInstance() {
@@ -44,6 +45,7 @@ public class UserManager {
 
     /**
      * Gets login time of given user.
+     *
      * @param user is a user of a chat.
      * @return login time of given user.
      */
@@ -53,6 +55,7 @@ public class UserManager {
 
     /**
      * Adds given user to the set of logged users, if this user not in the set.
+     *
      * @param user is a user of a chat.
      */
     public boolean addUser(User user) {
@@ -67,6 +70,7 @@ public class UserManager {
 
     /**
      * Gets all logged users.
+     *
      * @return set of users and their login time.
      */
     public Set<User> getUsers() {
@@ -75,6 +79,7 @@ public class UserManager {
 
     /**
      * Removes a user from the set of logged users.
+     *
      * @param user is a user of a chat.
      */
     public void removeUser(User user) {
