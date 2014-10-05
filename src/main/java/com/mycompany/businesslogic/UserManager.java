@@ -3,9 +3,7 @@ package com.mycompany.businesslogic;
 import com.mycompany.beans.User;
 import org.apache.log4j.Logger;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Manages users of the chat.
@@ -68,20 +66,11 @@ public class UserManager {
     }
 
     /**
-     * Checks is user logged in.
-     * @param user is a user of a chat.
-     * @return {@code true}, if the user is logged in, otherwise {@code false}
-     */
-    public boolean isUserNameUsed(User user) {
-        return users.containsKey(user);
-    }
-
-    /**
      * Gets all logged users.
      * @return set of users and their login time.
      */
-    public Map<User, Date> getUsers() {
-        return users;
+    public Set<User> getUsers() {
+        return new HashSet<User>(users.keySet());
     }
 
     /**
@@ -89,7 +78,9 @@ public class UserManager {
      * @param user is a user of a chat.
      */
     public void removeUser(User user) {
-        users.remove(user);
+        synchronized (users) {
+            users.remove(user);
+        }
         log.info("The user was removed: " + user.toString());
     }
 }

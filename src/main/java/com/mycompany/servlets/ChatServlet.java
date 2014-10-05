@@ -36,7 +36,7 @@ public class ChatServlet extends HttpServlet {
 //        System.out.print("\nUser: " + userName);
 
         if (action.equals("getUsers")) {
-            Set<User> users = new HashSet<User>(userManager.getUsers().keySet());
+            Set<User> users = userManager.getUsers();
             StringBuffer stringBuffer = new StringBuffer();
             stringBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             stringBuffer.append("<users>");
@@ -63,15 +63,17 @@ public class ChatServlet extends HttpServlet {
 
         if (action.equals("getHistory")) {
             String message = messageHistory.extractUserHistory(user);
-            log.info("\nMessage: " + message + " From user: " + user.getName());
-            StringBuffer stringBuffer = new StringBuffer();
+            if (message != null && !message.isEmpty()) {
+                log.info("\nMessage: " + message + " From user: " + user.getName());
+                StringBuffer stringBuffer = new StringBuffer();
 
-            response.setContentType("text/xml");
-            response.setHeader("Cache-Control", "no-cache");
-            stringBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            stringBuffer.append(message);
-            log.info("\n" + stringBuffer.toString());
-            response.getWriter().write(stringBuffer.toString());
+                response.setContentType("text/xml");
+                response.setHeader("Cache-Control", "no-cache");
+                stringBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+                stringBuffer.append(message);
+                log.info("\n" + stringBuffer.toString());
+                response.getWriter().write(stringBuffer.toString());
+            }
         }
     }
 

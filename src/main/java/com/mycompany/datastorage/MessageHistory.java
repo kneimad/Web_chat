@@ -7,10 +7,7 @@ import org.apache.log4j.Logger;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.*;
 
 public class MessageHistory {
     private static final int MAX_HISTORY_SIZE = 100;
@@ -39,13 +36,16 @@ public class MessageHistory {
     }
 
     public String extractUserHistory(User user) {
-        Iterator<UserMessage> iterator = new ArrayList<UserMessage>(history).iterator();
-        StringBuffer stringBuffer = new StringBuffer();
         Date loginTime = userManager.getLoginTime(user);
-        UserMessage userMessage;
+        if (loginTime == null) {
+            return "";
+        }
+        Iterator<UserMessage> iterator = cloneHistory().iterator();
+        StringBuffer stringBuffer = new StringBuffer();
+
         log.info("\nLogin time:" + loginTime);
         while (iterator.hasNext()) {
-            userMessage = iterator.next();
+            UserMessage userMessage = iterator.next();
             log.info("\nMsg time: " + userMessage.getTime() + "  need to be shown:  " + (loginTime.before(userMessage.getTime())));
             if (loginTime.before(userMessage.getTime())) {
                 appendMessage(userMessage, stringBuffer);
@@ -64,5 +64,11 @@ public class MessageHistory {
         stringBuffer.append("<name>" + userMessage.getUser().getName() + "</name>");
         stringBuffer.append("<message>: " + userMessage.getMessage() + "</message>");
         stringBuffer.append("</userMessage>");
+    }
+
+    private List<UserMessage> cloneHistory() {
+        synchronized (history) {
+            return new ArrayList<UserMessage>(history);
+        }
     }
 }
