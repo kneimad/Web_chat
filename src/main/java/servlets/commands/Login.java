@@ -1,7 +1,7 @@
-package com.mycompany.servlets.commands;
+package servlets.commands;
 
-import com.mycompany.beans.User;
-import com.mycompany.businesslogic.UserManager;
+import beans.User;
+import businesslogic.UserManager;
 import org.apache.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;

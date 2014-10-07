@@ -1,6 +1,6 @@
-package com.mycompany.servlets;
+package servlets;
 
-import com.mycompany.servlets.commands.ChatAction;
+import servlets.commands.ChatAction;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServlet;

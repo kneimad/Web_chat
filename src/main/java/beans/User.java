@@ -1,4 +1,4 @@
-package com.mycompany.beans;
+package beans;
 
 /**
  * Represents a user of the chat.

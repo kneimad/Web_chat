@@ -1,8 +1,8 @@
-package com.mycompany.servlets.commands;
+package servlets.commands;
 
-import com.mycompany.beans.User;
-import com.mycompany.beans.UserMessage;
-import com.mycompany.datastorage.MessageHistory;
+import beans.User;
+import beans.UserMessage;
+import datastorage.MessageHistory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;

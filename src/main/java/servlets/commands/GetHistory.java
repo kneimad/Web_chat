@@ -1,7 +1,7 @@
-package com.mycompany.servlets.commands;
+package servlets.commands;
 
-import com.mycompany.beans.User;
-import com.mycompany.datastorage.MessageHistory;
+import beans.User;
+import datastorage.MessageHistory;
 import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
@@ -28,8 +28,7 @@ public class GetHistory implements CommandExecutor {
             response.setHeader("Cache-Control", "no-cache");
             stringBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
             stringBuffer.append(message);
-            log.info("\n" + stringBuffer.toString());
-            try {
+             try {
                 response.getWriter().write(stringBuffer.toString());
             } catch (IOException e) {
                 log.error("Can't get Writer from response", e);

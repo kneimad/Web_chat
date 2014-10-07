@@ -1,8 +1,8 @@
-package com.mycompany.datastorage;
+package datastorage;
 
-import com.mycompany.beans.User;
-import com.mycompany.beans.UserMessage;
-import com.mycompany.businesslogic.UserManager;
+import beans.User;
+import beans.UserMessage;
+import businesslogic.UserManager;
 import org.apache.log4j.Logger;
 
 import java.text.DateFormat;

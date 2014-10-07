@@ -1,6 +1,6 @@
-package com.mycompany.businesslogic;
+package businesslogic;
 
-import com.mycompany.beans.User;
+import beans.User;
 import org.apache.log4j.Logger;
 
 import java.util.*;
