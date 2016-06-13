@@ -26,6 +26,7 @@ public class SendMessage implements CommandExecutor {
         log.info("From Server --> the message was sent: " + message);
         UserMessage userMessage = new UserMessage(user, message);
         messageHistory.addMessage(userMessage);
+        // hmmm, need to remove in log4j config
         log.info("[" + dateFormat.format(userMessage.getTime()) + "] " + userMessage.getUser().getName() + " : " + userMessage.getMessage());
 
     }

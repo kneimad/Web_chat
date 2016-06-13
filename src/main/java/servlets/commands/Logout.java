@@ -30,19 +30,24 @@ public class Logout implements CommandExecutor {
         }
         try {
             String userName = request.getSession().getAttribute("login").toString();
-            User user = new User(userName);
-            userManager.removeUser(user);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-            out.println("<font color=red>You have been deleted from Chat.</font>");
-            try {
-                dispatcher.include(request, response);
-            } catch (ServletException e) {
-                log.error("Redirection error occurred", e);
-            } catch (IOException e) {
-                log.error("IO Error while redirection", e);
+            //check to valid user
+            if (!userName.isEmpty()) {
+                User user = new User(userName);
+                userManager.removeUser(user);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+
+                // remove to front-end
+                out.println("<font color=red>You have been deleted from Chat.</font>");
+                try {
+                    dispatcher.include(request, response);
+                } catch (ServletException e) {
+                    log.error("Redirection error occurred", e);
+                } catch (IOException e) {
+                    log.error("IO Error while redirection", e);
+                }
             }
-        } finally {
-            out.close();
-        }
+            }finally{
+                out.close();
+            }
     }
 }

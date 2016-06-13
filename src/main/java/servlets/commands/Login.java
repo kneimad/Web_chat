@@ -23,39 +23,41 @@ public class Login implements CommandExecutor {
     public void execute(HttpServletRequest request, HttpServletResponse response) {
         response.setContentType("text/html;charset=UTF-8");
         String userName = request.getParameter("login");
-        User user = new User(userName);
-
-        if (userManager.addUser(user)) {
-            log.info("The new user was added: " + userName);
-            HttpSession session = request.getSession();
-            session.setAttribute("login", userName);
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp");
-            try {
-                dispatcher.forward(request, response);
-            } catch (ServletException e) {
-                log.error("Redirection error occurred", e);
-            } catch (IOException e) {
-                log.error("IO Error while redirection", e);
-            }
-        } else {
-            PrintWriter out;
-            try {
-                out = response.getWriter();
-            } catch (IOException e) {
-                log.error("Can't get Writer from response", e);
-                return;
-            }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
-            out.println("<font color=red>Current user name is already used.</font>");
-            try {
-                dispatcher.include(request, response);
-            } catch (ServletException e) {
-                log.error("Redirection error occurred", e);
-            } catch (IOException e) {
-                log.error("IO Error while redirection", e);
+        // check for valid data
+        if(!userName.isEmpty()) {
+            User user = new User(userName);
+            if (userManager.addUser(user)) {
+                log.info("The new user was added: " + userName);
+                HttpSession session = request.getSession();
+                session.setAttribute("login", userName);
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/chat.jsp");
+                try {
+                    dispatcher.forward(request, response);
+                } catch (ServletException e) {
+                    log.error("Redirection error occurred", e);
+                } catch (IOException e) {
+                    log.error("IO Error while redirection", e);
+                }
+            } else {
+                PrintWriter out;
+                try {
+                    out = response.getWriter();
+                } catch (IOException e) {
+                    log.error("Can't get Writer from response", e);
+                    return;
+                }
+                RequestDispatcher dispatcher = request.getRequestDispatcher("/index.jsp");
+                // remove to front-end
+                out.println("<font color=red>Current user name is already used.</font>");
+                try {
+                    dispatcher.include(request, response);
+                } catch (ServletException e) {
+                    log.error("Redirection error occurred", e);
+                } catch (IOException e) {
+                    log.error("IO Error while redirection", e);
+                }
             }
         }
-
     }
 
 }

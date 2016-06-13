@@ -4,6 +4,7 @@ import beans.User;
 import org.apache.log4j.Logger;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Manages users of the chat.
@@ -31,7 +32,7 @@ public class UserManager {
      * Solo constructor.
      */
     private UserManager() {
-        users = new HashMap<User, Date>();
+        users = new ConcurrentHashMap<User, Date>();
     }
 
     /**
@@ -59,6 +60,8 @@ public class UserManager {
      * @param user is a user of a chat.
      */
     public boolean addUser(User user) {
+
+        // maybe putIfAbsent(K key, V value)
         synchronized (users) {
             if (!users.containsKey(user)) {
                 users.put(user, new Date());

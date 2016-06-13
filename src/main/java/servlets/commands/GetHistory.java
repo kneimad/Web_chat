@@ -17,21 +17,27 @@ public class GetHistory implements CommandExecutor {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
+        StringBuilder stringBuilder = new StringBuilder();
         String userName = request.getSession().getAttribute("login").toString();
-        User user = new User(userName);
-        String message = messageHistory.extractUserHistory(user);
-        if (message != null && !message.isEmpty()) {
-            log.info("\nMessage: " + message + " From user: " + user.getName());
-            StringBuffer stringBuffer = new StringBuffer();
-
+        // check to valid userName
+        if(!userName.isEmpty()) {
+            User user = new User(userName);
+            String message = messageHistory.extractUserHistory(user);
+            // XML or JSON
             response.setContentType("text/xml");
             response.setHeader("Cache-Control", "no-cache");
-            stringBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-            stringBuffer.append(message);
-             try {
-                response.getWriter().write(stringBuffer.toString());
-            } catch (IOException e) {
-                log.error("Can't get Writer from response", e);
+            stringBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+            if (message != null && !message.isEmpty()) {
+                log.info("\nMessage: " + message + " From user: " + user.getName());
+                stringBuilder.append(message);
+                try {
+                    response.getWriter().write(stringBuilder.toString());
+                } catch (IOException e) {
+                    log.error("Can't get Writer from response", e);
+                }
+            } else {
+                log.info("\nMessage: NOT RETRIEVED" + user.getName());
+                stringBuilder.append("\nMessage: NOT RETRIEVED");
             }
         }
     }

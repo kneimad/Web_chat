@@ -13,10 +13,10 @@ public class MessageHistory {
     private static final int MAX_HISTORY_SIZE = 100;
     private static final DateFormat dateFormat = new SimpleDateFormat("[HH:mm:ss] ");
     private static final Logger log = Logger.getLogger(MessageHistory.class);
-    private static MessageHistory instance = new MessageHistory();
+    private static final MessageHistory instance = new MessageHistory();
     private final LinkedList<UserMessage> history;
     private UserManager userManager = UserManager.getInstance();
-
+    // maybe need to use concurrency collection
     private MessageHistory() {
         history = new LinkedList<UserMessage>();
     }
@@ -41,7 +41,7 @@ public class MessageHistory {
             return "";
         }
         Iterator<UserMessage> iterator = cloneHistory().iterator();
-        StringBuffer stringBuffer = new StringBuffer();
+        StringBuilder stringBuffer = new StringBuilder();
 
         log.info("\nLogin time:" + loginTime);
         while (iterator.hasNext()) {
@@ -58,16 +58,19 @@ public class MessageHistory {
         return ("<userMessages>" + stringBuffer.toString() + "</userMessages>");
     }
 
-    private void appendMessage(UserMessage userMessage, StringBuffer stringBuffer) {
-        stringBuffer.append("<userMessage>");
-        stringBuffer.append("<time>" + dateFormat.format(userMessage.getTime()) + "</time>");
-        stringBuffer.append("<name>" + userMessage.getUser().getName() + "</name>");
-        stringBuffer.append("<message>: " + userMessage.getMessage() + "</message>");
-        stringBuffer.append("</userMessage>");
+    // remove to business-logic package
+    private void appendMessage(UserMessage userMessage, StringBuilder stringBuilder) {
+        stringBuilder.append("<userMessage>");
+        stringBuilder.append("<time>" + dateFormat.format(userMessage.getTime()) + "</time>");
+        stringBuilder.append("<name>" + userMessage.getUser().getName() + "</name>");
+        stringBuilder.append("<message>: " + userMessage.getMessage() + "</message>");
+        stringBuilder.append("</userMessage>");
     }
 
+    // maybe copyOnWriteArrayList
     private List<UserMessage> cloneHistory() {
         synchronized (history) {
+            // maybe need to use concurrency collection
             return new ArrayList<UserMessage>(history);
         }
     }

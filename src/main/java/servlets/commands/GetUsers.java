@@ -17,18 +17,19 @@ public class GetUsers implements CommandExecutor {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) {
-        StringBuffer stringBuffer = new StringBuffer();
-        stringBuffer.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
-        stringBuffer.append("<users>");
+        StringBuilder stringBuilder = new StringBuilder();
+        // XML or JSON
+        stringBuilder.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?>");
+        stringBuilder.append("<users>");
         for (User user : userManager.getUsers()) {
-            stringBuffer.append("<user>" + user.getName() + "</user>");
+            stringBuilder.append("<user>").append(user.getName()). append("</user>");
         }
 
         response.setContentType("text/xml");
         response.setHeader("Cache-Control", "no-cache");
-        stringBuffer.append("</users>");
+        stringBuilder.append("</users>");
         try {
-            response.getWriter().write(stringBuffer.toString());
+            response.getWriter().write(stringBuilder.toString());
         } catch (IOException e) {
             log.error("Can't get Writer from response", e);
         }
